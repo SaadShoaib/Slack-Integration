@@ -4,8 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Replace this with your actual Slack Webhook URL
-# SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+SLACK_WEBHOOK_URL = "Add your webhook here"
 
 # HTML + JavaScript for Frontend
 html_template = """
