@@ -1,10 +1,21 @@
 from flask import Flask, render_template_string, request, jsonify
 import requests
+import hashlib
+import hmac
+import os
+from time import time
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+client = WebClient()
 
 app = Flask(__name__)
 
 # Replace this with your actual Slack Webhook URL
-SLACK_WEBHOOK_URL = "Add your webhook here"
+SLACK_BOT_TOKEN = "add the bot token here"
+
+slack_token = SLACK_BOT_TOKEN
+client = WebClient(token=slack_token)
 
 # HTML + JavaScript for Frontend
 html_template = """
@@ -59,8 +70,12 @@ def send_message():
     if not message:
         return jsonify({"message": "Message cannot be empty"}), 400
 
-    payload = {"text": message}
-    response = requests.post(SLACK_WEBHOOK_URL, json=payload)
+    # payload = {"text": message}
+    # response = requests.post(SLACK_WEBHOOK_URL, json=payload)
+    response = client.chat_postMessage(
+        channel="new-channel",
+        text= message
+    )
 
     if response.status_code == 200:
         return jsonify({"message": "Message sent to Slack!"})
